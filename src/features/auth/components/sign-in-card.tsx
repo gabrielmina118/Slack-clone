@@ -10,8 +10,17 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { BsGithub } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
+import { SignFlow } from "../types";
+import { useState } from "react";
 
-export const SignInCard = () => {
+interface SignInCardProps {
+    setState: (state: SignFlow) => void;
+}
+
+export const SignInCard: React.FC<SignInCardProps> = ({ setState }) => {
+    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
+
     return (
         <Card className="w-full h-full p-8">
             <CardHeader className="px-0 pt-0">
@@ -24,16 +33,16 @@ export const SignInCard = () => {
                 <form className="space-y-2.5">
                     <Input
                         disabled={false}
-                        value={""}
-                        onChange={() => {}}
+                        value={email}
+                        onChange={(event) => setEmail(event.target.value)}
                         placeholder="Email"
                         type="email"
                         required
                     />
                     <Input
                         disabled={false}
-                        value={""}
-                        onChange={() => {}}
+                        value={password}
+                        onChange={(event) => setPassword(event.target.value)}
                         placeholder="Senha"
                         type="password"
                         required
@@ -70,7 +79,13 @@ export const SignInCard = () => {
                         Logar com Github
                     </Button>
                     <p className="text-xs text-muted-foreground">
-                        Não tem conta? <span className="text-sky-700 hover:underline cursor-pointer">Cadastre-se</span>
+                        Não tem conta?{" "}
+                        <span
+                            onClick={() => setState("singUp")}
+                            className="text-sky-700 hover:underline cursor-pointer"
+                        >
+                            Cadastre-se
+                        </span>
                     </p>
                 </div>
             </CardContent>
